@@ -1,0 +1,69 @@
+<div class="card">
+    <div class="card-body">
+        <button class="btn btn-success mb-3" (click)="agregarFila()">Agregar fila</button>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Posicion</td>
+                        <td>Piloto</td>
+                        <td>Coche</td>
+                        <!-- <td>Id EquipoSim</td> -->
+                        <td># V</td>
+                        <td>T. Total</td>
+                        <td>Dif</td>
+                        <td>Mejor Vuelta</td>
+                        <td>Tiempo Qualy</td>
+                        <td>P. Box</td>
+                        <td>P. Sal.</td>
+                        <td>Obs</td>
+                        <td>Acciones</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let fila of filas; let i = index">
+                        <td>
+                            <select [(ngModel)]="fila.idPosicion" class="form-control">
+                                <option value="">Seleccione una Posición</option>
+                                <option *ngFor="let item of posiciones" [value]="item.id">{{item.nombreCorto}}</option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <select [(ngModel)]="fila.idPiloto" class=" form-control">
+                                <option value="">Seleccione un piloto</option>
+                                <option *ngFor="let item of pilotos " [value]="item.idPiloto ">{{item.Piloto}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select [(ngModel)]="fila.idCoche " class="form-control ">
+                                <option value="">Seleccione un Coche</option>
+                                <option *ngFor="let item of coche " [value]="item.id ">{{item.nombre}}</option>
+                            </select>
+                        </td>
+                        <!-- <td>
+                            <select [(ngModel)]="fila.idEquipoSim " class="form-control ">
+                            <option value=" ">Seleccione un piloto</option>
+                        <option *ngFor="let item of equipo " [value]="item.id ">{{item.piloto}}</option>
+                      </select>
+                        </td> -->
+                        <td><input type="text" class="form-control " [(ngModel)]="fila.numeroVueltas"></td>
+                        <td><input type="text" class="form-control " [(ngModel)]="fila.tiempoTotal"></td>
+                        <td><input type="text" class="form-control " [(ngModel)]="fila.diferencia"></td>
+                        <td><input type="text" class="form-control " [(ngModel)]="fila.mejorVuelta"></td>
+                        <td><input type="text" class="form-control " [(ngModel)]="fila.tiempoQualy"></td>
+                        <td><input type="text" class="form-control " [(ngModel)]="fila.paradasBoxes"></td>
+                        <td><input type="text" class="form-control " [(ngModel)]="fila.PosSalida"></td>
+                        <td><input type="text " class="form-control " [(ngModel)]="fila.Obsevaciones"></td>
+
+                        <td>
+                            <button (click)="eliminarFila(i) " class="btn btn-danger ">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button (click)="capturarInformacion() " class="btn btn-info mt-3">Capturar información</button>
+    </div>
+</div>

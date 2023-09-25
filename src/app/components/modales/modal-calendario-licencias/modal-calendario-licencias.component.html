@@ -1,0 +1,91 @@
+<!-- Moda Calendario -->
+
+
+<div class="modal fade show" *ngIf="ModalcalendarioLicencias" id="ModalcalendarioLicencias" tabindex="-1" role="dialog" aria-labelledby="ModalcalendarioLicenciasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalcalendarioLicenciasLabel">Como Obtener Licencias</h5>
+                <button type="button" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button (click)="tab('calendario')" class="nav-link active" id="calendario-tab" data-toggle="tab" data-target="#calendario" type="button" role="tab" aria-controls="calendario" aria-selected="true">Calendario</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button (click)="tab('tiemposActuales')" class="nav-link" id="tiemposActuales-tab" data-toggle="tab" data-target="#tiemposActuales" type="button" role="tab" aria-controls="tiemposActuales" aria-selected="false">Tiempos Actuales</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div *ngIf="tab1" class="tab-pane fade show active" id="calendario" role="tabpanel" aria-labelledby="calendario-tab">
+
+                            <table class="table table-border">
+                                <thead>
+                                    <tr>
+                                        <td>Id</td>
+                                        <td>Fecha/Hora</td>
+                                        <td>Simulador</td>
+                                        <td>Licencia</td>
+                                        <td>Host</td>
+                                        <td>Info Adicional</td>
+                                        <td>Asistir</td>
+                                        <td>Participantes</td>
+                                        <td>Estado</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let calendario of tablaLicenciasCalendario">
+                                        <td>{{calendario.idCalendario}}</td>
+                                        <td>{{retornaFecha(calendario.Fecha_Hora) | date :'MMM d, y, h:mm a'}}</td>
+                                        <td>{{calendario.Simulador}}</td>
+                                        <td>{{calendario.Licencia}}</td>
+                                        <td>{{calendario.host}}</td>
+                                        <td>{{calendario.infoAdicional}}</td>
+                                        <td>
+                                            <div *ngIf="calendario.idEstadoCarrera ===1">
+                                                <button class="btn btn-success" (click)="Asistir(calendario.idCalendario)">Asistir</button>
+                                            </div>
+                                        </td>
+                                        <td><a [href]="calendario.Participantes" class="btn btn-primary" target="_blank">Ver</a></td>
+                                        <td>{{calendario.Estado}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div *ngIf="tab2" class="tab-pane fade" id="tiemposActuales" role="tabpanel" aria-labelledby="tiemposActuales-tab">
+                            <table class="table table-border">
+                                <thead>
+                                    <tr>
+                                        <td>Pista</td>
+                                        <td>Evento</td>
+                                        <td>Tiempo</td>
+                                        <td>Id Sesion</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let tiempo of tablaTiemposClasificacion">
+                                        <td>{{tiempo.Pista}}</td>
+                                        <td>{{tiempo.Evento}}</td>
+                                        <td>
+                                            <div *ngIf="tiempo.Tiempo === null">Sin Registro</div>
+                                            {{tiempo.Tiempo}}
+                                        </td>
+                                        <td>{{tiempo.idSimDataSesion}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="closeModal()" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>

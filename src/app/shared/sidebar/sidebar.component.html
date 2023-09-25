@@ -1,0 +1,125 @@
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="user-profile">
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><img [src]="foto" alt="user"><span class="hide-menu">{{user.nombreCorto | slice: 0:15}} {{(user.nombreCorto.length > 15) ? '...':''}}</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a routerLink="perfil" routerLinkActive="active">Mi perfil </a></li>
+                        <li><a routerLink="account-settings">Ajustes</a></li>
+                        <li><a (click)="logout()" class="cursor">Salir</a></li>
+                    </ul>
+                </li>
+                <li class="nav-devider"></li>
+                <li class="nav-small-cap">PERSONAL</li>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" routerLink="/dashboard" aria-expanded="false">
+                        <i class="mdi mdi-gauge"></i>
+                        <span class="hide-menu">Dashboard
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
+                        <i class="mdi mdi-format-float-left"></i>
+                        <span class="hide-menu">Identificadores
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a routerLink="simulators" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">Crear Nuevo </a></li>
+                        <li><a routerLink="simulators/identiti" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">Mis Identificadores </a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
+                        <i class="mdi mdi-file-document-box"></i>
+                        <span class="hide-menu">Historial
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a routerLink="historial/reportes" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">Reportes </a></li>
+                        <li><a routerLink="historial/resultados" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">Resultados </a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" routerLink="statistics" aria-expanded="false">
+                        <i class="mdi mdi-chart-pie"></i>
+                        <span class="hide-menu">Panel Estadístico
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" routerLink="communiques" aria-expanded="false">
+                        <i class="mdi mdi-book-open-page-variant"></i>
+                        <span class="hide-menu">Comunicados
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" routerLink="guias" aria-expanded="false">
+                        <i class="mdi mdi-feather"></i>
+                        <span class="hide-menu">Guias
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
+                        <i class="mdi mdi-diamond"></i>
+                        <span class="hide-menu">Apoyanos
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a routerLink="apoyanos/nitro" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">	Apoya a Nitro </a></li>
+                        <li><a routerLink="apoyanos/tienda-oficial" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">	Tienda Oficial </a></li>
+                    </ul>
+                </li>
+                <li *ngIf="comisariosRevisores">
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
+                        <i class="mdi mdi-file-document"></i>
+                        <span class="hide-menu">Comisarios Revisores
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li *ngIf="comisariosRevisores"><a routerLink="comisarios/reportes-pendientes" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">Reportes Pendientes</a></li>
+                        <li><a routerLink="comisarios/report-history" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">Historial </a></li>
+                    </ul>
+                </li>
+                <li *ngIf="comisariosLideres">
+                    <a class="has-arrow waves-effect waves-dark" aria-expanded="false">
+                        <i class="mdi mdi-file-document"></i>
+                        <span class="hide-menu">Comisarios Lideres
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li *ngIf="comisariosLideres"><a routerLink="comisarios/reportes-pendientes-lideres" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">Reportes Pendientes </a></li>
+                        <li><a routerLink="comisarios/report-history" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }">Historial </a></li>
+                    </ul>
+                </li>
+                <li *ngIf="digitadores">
+                    <a class="has-arrow waves-effect waves-dark" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" routerLink="carreras/resultados-listado" aria-expanded="false">
+                        <i class="mdi mdi-keyboard-variant"></i>
+                        <span class="hide-menu">Digitación
+                        </span>
+                    </a>
+                </li>
+                <li *ngIf="locutores">
+                    <a class="has-arrow waves-effect waves-dark" routerLinkActive="active" [routerLinkActiveOptions]="{ exact:true }" routerLink="locutores" aria-expanded="false">
+                        <i class="mdi mdi-television-guide"></i>
+                        <span class="hide-menu">Locutores
+                        </span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->

@@ -1,0 +1,214 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive" *ngIf="datosResultados; else elseBlock">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>idReporte</th>
+                                <th>Torneo </th>
+                                <th>Division</th>
+                                <th>Evento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let reporte of reportes">
+                                <td>{{reporte.idReporte}}</td>
+                                <td>{{reporte.Torneo}}</td>
+                                <td>{{reporte.Division}}</td>
+                                <td>{{reporte.Evento}}</td>
+                                <td class="text-rigth"><button class="btn btn-primary" (click)="openModal(reporte)">Ver reporte</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ng-template #elseBlock>
+                    <h1>No tiene resultados</h1>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Moda Calendario -->
+<!-- Modal Reportes -->
+<div class="modal fade show" *ngIf="modalReportes" id="reportesEnproceso" tabindex="-1" aria-labelledby="reportesEnproceso" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reportesEnprocesoLabel">Reportes</h5>
+                <button (click)="closeModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Información General</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Descargos</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Evidencias</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="Concepto-tab" data-toggle="tab" data-target="#Concepto" type="button" role="tab" aria-controls="Concepto" aria-selected="false">Concepto</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="reglamento-tab" data-toggle="tab" data-target="#reglamento" type="button" role="tab" aria-controls="reglamento" aria-selected="false">Reglamento</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="py-3">
+                            <h3>Reportes</h3>
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <td>Fecha Reporte</td>
+                                    <td class="capitalice">{{retornaFecha(datosInformacionGeneral[0]['informacionGeneral'][0].fechaIncidente) | date :'MMM d, y, h:mm a'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Reporte No</td>
+                                    <td>{{datosInformacionGeneral[0]['informacionGeneral'][0].idReporte}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Estado</td>
+                                    <td>{{datosInformacionGeneral[0]['informacionGeneral'][0].Estado}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Evento</td>
+                                    <td>{{datosInformacionGeneral[0]['informacionGeneral'][0].nombreEvento}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha Hora Carrera</td>
+                                    <td class="capitalice">{{retornaFecha(datosInformacionGeneral[0]['informacionGeneral'][0].fechaHoraCarrera) | date :'MMM d, y, h:mm a'}}</td>
+                                </tr>
+
+                            </table>
+                            <h3>Involucrados</h3>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td>Nombre Piloto</td>
+                                        <td>Rol</td>
+                                        <td>Rep</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of datosInformacionGeneral[1]['involucrados']">
+                                        <td>
+                                            {{item.nombrePiloto}}
+                                        </td>
+                                        <td>
+                                            {{item.Rol}}
+                                        </td>
+                                        <td>
+                                            <a *ngIf="item.Rep !=null" [href]="item.Rep" class="btn btn-info">Ver</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="py-3 content-cards">
+
+                            <div class="card descargos w-100" *ngFor="let item of datosInformacionGeneral[2]['descargos']">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{item.nombrePiloto}} - {{item.Rol}} - {{retornaFecha(item.fechaCreacion) |date :'MMM d, y, h:mm a'}}</h5>
+                                    <p class="card-text">{{item.descargo}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <a href="https://multimedia.nitrosimracing.com.co/plantillasphp/visorevidencias.php?&id_reporte={{reporte.idReporte}}" arget="_blank" class="btn btn-info"> Abrir visor de evidencias</a>
+                        <div class="py-3 table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td>Fecha</td>
+                                        <td>Nombre</td>
+                                        <td>Rol</td>
+                                        <td>Link</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of datosInformacionGeneral[3]['evicencias']">
+                                        <td class="capitalice">
+                                            {{retornaFecha(item.fechaCreacion) |date :'MMM d, y, h:mm a'}}
+                                        </td>
+                                        <td>
+                                            {{item.nombrePiloto}}
+                                        </td>
+                                        <td>
+                                            {{item.Rol}}
+                                        </td>
+                                        <td>
+                                            <a [href]="item.linkEvidencia" target="_blank" class="btn btn-info">Ver</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="Concepto" role="tabpanel" aria-labelledby="Concepto-tab">
+                        <form [formGroup]="form" (submit)="saveform()">
+                            <div class="form-group">
+                                <label for="concepto" class="control-label">Concepto</label>
+                                <textarea name="concepto" id="concepto" cols="10" rows="5" class="form-control" formControlName="concepto"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="idSancion" class="control-label">Sancion</label>
+                                <select name="" class="form-control" formControlName="idSancion" id="" (change)="getGrvgavedades($event.target)">
+                                    <option value="">Seleccione Una sanción</option>
+                                    <option *ngFor="let item of sanciones" [value]="item.id">{{item.titulo}}</option>
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="idGravedad" class="control-label">Gravedad</label>
+                                <select name="" class="form-control" formControlName="idGravedad" id="">
+                                    <option value="">Seleccione Una Gravedad</option>
+                                    <option *ngFor="let item of gravedades" [value]="item.id">{{item.nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="reglamento" role="tabpanel" aria-labelledby="reglamento-tab">
+                        <a href="https://nitrosimracing.com.co/reglamento-general/" target="_blank" class="btn btn-info">Ver Reglamentos</a>
+                        <table class="mt-3 table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>Seccion</td>
+                                    <td>Titulo</td>
+                                    <td>Nombre</td>
+                                    <td>Sanción</td>
+                                    <td>Descripción</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of reglamentos">
+                                    <td>{{item.seccion}}</td>
+                                    <td>{{item.titulo}}</td>
+                                    <td>{{item.nombre}}</td>
+                                    <td>{{item.Sancion}}</td>
+                                    <td>{{item.Descrip}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="closeModal()">salir</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,219 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Historial - Reportes</h5>
+                <table class="table table-border">
+                    <thead>
+                        <tr>
+                            <th>Reporte N°</th>
+                            <th>Fecha</th>
+                            <th>Torneo</th>
+                            <th>Division</th>
+                            <th>Carrera</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of reportes">
+                            <td>{{item.ReporteNo}}</td>
+                            <td>{{retornaFecha(item.Fecha) | date :'MMM d, y, h:mm a'}}</td>
+                            <td>{{item.Torneo}}</td>
+                            <td>{{item.Division}}</td>
+                            <td>{{item.Carrera}}</td>
+                            <td>{{item.Rol}}</td>
+                            <td>{{item.Estado}}</td>
+                            <td><button class="btn btn-info" (click)="openModalConceptosSanciones(item)">Ver</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" *ngIf="ModalConceptosSanciones" id="reportes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reportes</h5>
+                <button (click)="ModalConceptosSanciones = false" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="infoGEneral-tab" data-toggle="tab" data-target="#infoGEneral" type="button" role="tab" aria-controls="infoGEneral" aria-selected="true">Información General</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="descargos-tab" data-toggle="tab" data-target="#descargos" type="button" role="tab" aria-controls="descargos" aria-selected="false">Descargos</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="evidencias-tab" data-toggle="tab" data-target="#evidencias" type="button" role="tab" aria-controls="evidencias" aria-selected="false">Evidencias</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="home-tab" data-toggle="tab" data-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Conceptos</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Sanciones</button>
+                    </li>
+                    <!-- <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Evidencias</button>
+                    </li> -->
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="infoGEneral" role="tabpanel" aria-labelledby="infoGEneral-tab">
+                        <div class="py-3">
+                            <h3>Reportes</h3>
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <td>Fecha Reporte</td>
+                                    <td class="capitalice">{{retornaFecha(datosInformacionGeneral[0]['informacionGeneral'][0].fechaIncidente) | date :'MMM d, y, h:mm a'}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Reporte No</td>
+                                    <td>{{datosInformacionGeneral[0]['informacionGeneral'][0].idReporte}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Estado</td>
+                                    <td>{{datosInformacionGeneral[0]['informacionGeneral'][0].Estado}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Evento</td>
+                                    <td>{{datosInformacionGeneral[0]['informacionGeneral'][0].nombreEvento}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha Hora Carrera</td>
+                                    <td class="capitalice">{{retornaFecha(datosInformacionGeneral[0]['informacionGeneral'][0].fechaHoraCarrera) | date :'MMM d, y, h:mm a'}}</td>
+                                </tr>
+
+                            </table>
+                            <h3>Involucrados</h3>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td>Nombre Piloto</td>
+                                        <td>Rol</td>
+                                        <td>Rep</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of datosInformacionGeneral[1]['involucrados']">
+                                        <td>
+                                            {{item.nombrePiloto}}
+                                        </td>
+                                        <td>
+                                            {{item.Rol}}
+                                        </td>
+                                        <td>
+                                            <a *ngIf="item.Rep !=null" [href]="item.Rep" class="btn btn-info">Ver</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="descargos" role="tabpanel" aria-labelledby="descargos-tab">
+                        <div class="py-3 content-cards">
+
+                            <div class="card descargos w-100" *ngFor="let item of datosInformacionGeneral[2]['descargos']">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{item.nombrePiloto}} - {{item.Rol}} - {{retornaFecha(item.fechaCreacion) |date :'MMM d, y, h:mm a'}}</h5>
+                                    <p class="card-text">{{item.descargo}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="evidencias" role="tabpanel" aria-labelledby="evidencias-tab">
+                        <a href="https://multimedia.nitrosimracing.com.co/plantillasphp/visorevidencias.php?&id_reporte={{reporte.idReporte}}" arget="_blank" class="btn btn-info"> Abrir visor de evidencias</a>
+                        <div class="py-3 table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td>Fecha</td>
+                                        <td>Nombre</td>
+                                        <td>Rol</td>
+                                        <td>Url</td>
+                                        <td>Link</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of datosInformacionGeneral[3]['evicencias']">
+                                        <td class="capitalice">
+                                            {{retornaFecha(item.fechaCreacion) |date :'MMM d, y, h:mm a'}}
+                                        </td>
+                                        <td>
+                                            {{item.nombrePiloto}}
+                                        </td>
+                                        <td>
+                                            {{item.Rol}}
+                                        </td>
+                                        <td>{{item.linkEvidencia}}</td>
+                                        <td>
+                                            <a [href]="item.linkEvidencia" target="_blank" class="btn btn-info">Ver</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <table class="table">
+                            <thead>
+                                <!-- <th scope="col">Comisario</th> -->
+                                <th scope="col">Fecha Emision</th>
+                                <th scope="col">Gravedad Propuesta</th>
+                                <th scope="col">Rol</th>
+                                <th scope="col">Sancion Propuesta</th>
+                                <th scope="col">Concepto</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of conceptos">
+                                    <!-- <td>{{item.Comisario}}</td> -->
+                                    <td *ngIf="item.Rol === 'Comisario Lider'">{{item.FechaEmision |date}}</td>
+                                    <td *ngIf="item.Rol === 'Comisario Lider'">{{item.GravedadPropuesta}}</td>
+                                    <td *ngIf="item.Rol === 'Comisario Lider'">{{item.Rol}}</td>
+                                    <td *ngIf="item.Rol === 'Comisario Lider'">{{item.SancionPropuesta}}</td>
+                                    <td *ngIf="item.Rol === 'Comisario Lider'">{{item.concepto}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <table class="table">
+                            <thead>
+                                <!-- <th scope="col">Comisario</th> -->
+                                <th scope="col">Penalizacion</th>
+                                <th scope="col">Piloto</th>
+                                <th scope="col">Rol</th>
+                                <th scope="col">Seccion</th>
+                                <th scope="col">Unidad De Medida</th>
+                                <th scope="col">Valor</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of sanciones">
+                                    <!-- <td>{{item.Comisario}}</td> -->
+                                    <td>{{item.Penalizacion }}</td>
+                                    <td>{{item.Piloto}}</td>
+                                    <td>{{item.Rol}}</td>
+                                    <td>{{item.seccion}}</td>
+                                    <td>{{item.unidadDeMedida}}</td>
+                                    <td>{{item.valor}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+                    </div> -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="ModalConceptosSanciones = false">salir</button>
+            </div>
+        </div>
+    </div>
+</div>

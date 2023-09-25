@@ -1,0 +1,20 @@
+<!-- Moda Como Obtener licencia -->
+
+<div class="modal fade show" *ngIf="ModalComoObtenerLicencias" id="ModalComoObtenerLicencias" tabindex="-1" role="dialog" aria-labelledby="ModalComoObtenerLicenciasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalComoObtenerLicenciasLabel">Como Obtener Licencias</h5>
+                <button type="button" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div [innerHTML]="licencias.comoObtenerla"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="closeModal()" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>

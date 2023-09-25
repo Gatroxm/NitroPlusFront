@@ -1,0 +1,352 @@
+<div class="modal fade show" id="reportesEnproceso" tabindex="-1" aria-labelledby="reportesEnproceso" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reportesEnprocesoLabel">Información General</h5>
+                <button (click)="salir()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('infoFecha')" class="nav-link active" id="infoFecha-tab" data-toggle="tab" data-target="#infoFecha" type="button" role="tab" aria-controls="infoFecha" aria-selected="true">Info Fecha</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('confirmados')" class="nav-link" id="confirmados-tab" data-toggle="tab" data-target="#confirmados" type="button" role="tab" aria-controls="confirmados" aria-selected="false">Confirmados</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('Sancionados')" class="nav-link" id="Sancionados-tab" data-toggle="tab" data-target="#Sancionados" type="button" role="tab" aria-controls="Sancionados" aria-selected="false">Sancionados</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('Repeticiones')" class="nav-link" id="Repeticiones-tab" data-toggle="tab" data-target="#Repeticiones" type="button" role="tab" aria-controls="Repeticiones" aria-selected="false">Repeticiones</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('CalendarioTorneo')" class="nav-link" id="CalendarioTorneo-tab" data-toggle="tab" data-target="#CalendarioTorneo" type="button" role="tab" aria-controls="CalendarioTorneo" aria-selected="false">Calendario</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('sistemaPts')" class="nav-link" id="sistemaPts-tab" data-toggle="tab" data-target="#sistemaPts" type="button" role="tab" aria-controls="sistemaPts" aria-selected="false">Sistema de Pts</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('Torneo')" class="nav-link" id="Torneo-tab" data-toggle="tab" data-target="#Torneo" type="button" role="tab" aria-controls="Torneo" aria-selected="false">Torneo</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('Reglas')" class="nav-link" id="Reglas-tab" data-toggle="tab" data-target="#Reglas" type="button" role="tab" aria-controls="Reglas" aria-selected="false">Reglas</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tabs_pestanas tab-pane fade show active" id="infoFecha" role="tabpanel" aria-labelledby="infoFecha-tab">
+                        <table class="table table-border">
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].requiereConfirmacion !== null">
+                                <td>Requiere confirmación de asistencia</td>
+                                <td class="text-center">
+                                    <span class="text-white p-1 bg-danger" *ngIf="InfoReglasTorneo[0]['info'][0].requiereConfirmacion === 0">No</span>
+                                    <span class="text-white p-1 bg-success" *ngIf="InfoReglasTorneo[0]['info'][0].requiereConfirmacion === 1">Si</span>
+                                </td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].horasAntesConfirmacionApertura !== null">
+                                <td>Hora inicio confirmación</td>
+                                <td class="text-center capitalice">{{retornaFecha(InfoReglasTorneo[0]['info'][0].horasAntesConfirmacionApertura) | date :'MMM d, y, h:mm a'}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].horasAntesConfirmacionCierre !== null">
+                                <td>Hora cierre confirmación</td>
+                                <td class="text-center capitalice">{{retornaFecha(InfoReglasTorneo[0]['info'][0].horasAntesConfirmacionCierre) | date :'MMM d, y, h:mm a'}} </td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].permiteReservas !== null">
+                                <td>Permite reserva </td>
+                                <td class="text-center">
+                                    <span class="text-white p-1 bg-danger" *ngIf="InfoReglasTorneo[0]['info'][0].permiteReservas === 0">No</span>
+                                    <span class="text-white p-1 bg-success" *ngIf="InfoReglasTorneo[0]['info'][0].permiteReservas === 1">Si</span>
+                                </td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].permiteReportes !== null">
+                                <td>Permite reportes</td>
+                                <td class="text-center">
+                                    <span class="text-white p-1 bg-danger" *ngIf="InfoReglasTorneo[0]['info'][0].permiteReportes === 0">No</span>
+                                    <span class="text-white p-1 bg-success" *ngIf="InfoReglasTorneo[0]['info'][0].permiteReportes === 1">Si</span>
+                                </td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].requiereRepeticion !== null">
+                                <td>Requiere repeticion</td>
+                                <td class="text-center">
+                                    <span class="text-white p-1 bg-danger" *ngIf="InfoReglasTorneo[0]['info'][0].requiereRepeticion === 0">No</span>
+                                    <span class="text-white p-1 bg-success" *ngIf="InfoReglasTorneo[0]['info'][0].requiereRepeticion === 1">Si</span>
+                                </td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].plazoEnvioRepeticion !== null">
+                                <td>Plazo envio repeticion</td>
+                                <td class="text-center capitalice">{{retornaFecha(InfoReglasTorneo[0]['info'][0].plazoEnvioRepeticion) | date :'MMM d, y, h:mm a'}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].horasInicioReportes !== null">
+                                <td>Hora inicio de reporte</td>
+                                <td class="text-center capitalice">{{retornaFecha(InfoReglasTorneo[0]['info'][0].horasInicioReportes) | date :'MMM d, y, h:mm a'}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].horasFinReportes !== null">
+                                <td>Hora fin de reporte</td>
+                                <td class="text-center capitalice">{{retornaFecha(InfoReglasTorneo[0]['info'][0].horasFinReportes) | date :'MMM d, y, h:mm a'}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].horasFinApelaciones !== null">
+                                <td>Hora fin de apelaciones</td>
+                                <td class="text-center capitalice">{{retornaFecha(InfoReglasTorneo[0]['info'][0].horasFinApelaciones) | date :'MMM d, y, h:mm a'}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].afectaIndiceParticipacion !== null">
+                                <td>Afecta participación</td>
+                                <td class="text-center">
+                                    <span class="text-white p-1 bg-danger" *ngIf="InfoReglasTorneo[0]['info'][0].afectaIndiceParticipacion === 0">No</span>
+                                    <span class="text-white p-1 bg-success" *ngIf="InfoReglasTorneo[0]['info'][0].afectaIndiceParticipacion === 1">Si</span>
+                                </td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].Formato !== null">
+                                <td>Formato</td>
+                                <td class="text-center capitalice">{{InfoReglasTorneo[0]['info'][0].Formato}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].horaVirtual !== null">
+                                <td>Hora virtual</td>
+                                <td class="text-center capitalice">{{InfoReglasTorneo[0]['info'][0].horaVirtual}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].tempAire !== null">
+                                <td>Temperatura de aire</td>
+                                <td class="text-center capitalice">{{InfoReglasTorneo[0]['info'][0].tempAire}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].tempPista !== null">
+                                <td>Temperatura de pista</td>
+                                <td class="text-center capitalice">{{InfoReglasTorneo[0]['info'][0].tempPista}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].nubosidad !== null">
+                                <td>Nubosidad</td>
+                                <td class="text-center capitalice">{{InfoReglasTorneo[0]['info'][0].nubosidad}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].requisitoBoxes !== null">
+                                <td>Requisito en boxes</td>
+                                <td class="text-center capitalice">{{InfoReglasTorneo[0]['info'][0].requisitoBoxes}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].lluvia !== null">
+                                <td>Porcentaje de lluvia</td>
+                                <td class="text-center capitalice">{{InfoReglasTorneo[0]['info'][0].lluvia}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].observaciones !== null">
+                                <td>Observaciones</td>
+                                <td class="text-center capitalice">{{InfoReglasTorneo[0]['info'][0].observaciones}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].urlTransmision !== null">
+                                <td>Url transmisión</td>
+                                <td class="text-center capitalice"><a [href]="InfoReglasTorneo[0]['info'][0].urlTransmision" class="btn btn-info">Ir</a></td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].esPorEtapas !== null">
+                                <td>Es por etapas</td>
+                                <td class="text-center">
+                                    <span class="text-white p-1 bg-danger" *ngIf="InfoReglasTorneo[0]['info'][0].esPorEtapas === 0">No</span>
+                                    <span class="text-white p-1 bg-success" *ngIf="InfoReglasTorneo[0]['info'][0].esPorEtapas === 1">Si</span>
+                                </td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].noVueltasRequeridas !== null">
+                                <td>N° de vuelta requeridas</td>
+                                <td class="text-center capitalice">{{InfoReglasTorneo[0]['info'][0].noVueltasRequeridas}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].elo_multiplicador !== null">
+                                <td>ELO multiplicador</td>
+                                <td class="text-center capitalice">{{InfoReglasTorneo[0]['info'][0].elo_multiplicador}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].link_practicas !== null">
+                                <td>Link de practicas</td>
+                                <td class="text-center capitalice"><a [href]="InfoReglasTorneo[0]['info'][0].link_practicas" class="btn btn-info">Ir</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="Torneo" role="tabpanel" aria-labelledby="Torneo-tab">
+                        <div class="card mb-3" *ngIf="InfoReglasTorneo[0]['info'][0].descripcion !== null">
+                            <div class="card-body">
+                                <h5 class="card-title">Descripción</h5>
+                                <div [innerHTML]="InfoReglasTorneo[0]['info'][0].descripcion"></div>
+                            </div>
+                        </div>
+                        <div class="card mb-3" *ngIf="InfoReglasTorneo[0]['info'][0].requisitosTxt !== null">
+                            <div class="card-body">
+                                <h5 class="card-title">Requisitos</h5>
+                                <div [innerHTML]="InfoReglasTorneo[0]['info'][0].requisitosTxt"></div>
+                            </div>
+                        </div>
+                        <div class="card mb-3" *ngIf="InfoReglasTorneo[0]['info'][0].formatoTxt !== null">
+                            <div class="card-body">
+                                <h5 class="card-title">Formato</h5>
+                                <div [innerHTML]="InfoReglasTorneo[0]['info'][0].formatoTxt"></div>
+                            </div>
+                        </div>
+                        <table class="table table-border">
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].NombreTorneo !== null">
+                                <td>Nombre torneo</td>
+                                <td>{{InfoReglasTorneo[0]['info'][0].NombreTorneo}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].NombreDivision !== null">
+                                <td>Nombre división</td>
+                                <td>{{InfoReglasTorneo[0]['info'][0].NombreDivision}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].fechaInicio !== null">
+                                <td>Fecha inicio</td>
+                                <td>{{retornaFecha(InfoReglasTorneo[0]['info'][0].fechaInicio) | date :'MMM d, y, h:mm a'}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].fechaFin !== null">
+                                <td>Fecha fin </td>
+                                <td>{{retornaFecha(InfoReglasTorneo[0]['info'][0].fechaFin) | date :'MMM d, y, h:mm a'}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].fechaLimiteInscripcion !== null">
+                                <td>Fecha límite</td>
+                                <td>{{retornaFecha(InfoReglasTorneo[0]['info'][0].fechaLimiteInscripcion) | date :'MMM d, y, h:mm a'}}</td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].urlInscripcionAdicional !== null">
+                                <td>Url inscripción</td>
+                                <td><a [href]="InfoReglasTorneo[0]['info'][0].urlInscripcionAdicional" target="_blank" class="btn btn-info">Ir</a></td>
+                            </tr>
+                            <tr *ngIf="InfoReglasTorneo[0]['info'][0].instruccionesAdicionales !== null">
+                                <td>Instrucciones</td>
+                                <td>{{InfoReglasTorneo[0]['info'][0].instruccionesAdicionales}}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="Reglas" role="tabpanel" aria-labelledby="Reglas-tab">
+                        <table class="table table-border">
+                            <thead>
+                                <tr>
+                                    <td>Numero</td>
+                                    <td>Regla</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of InfoReglasTorneo[1]['reglas'] let i = index;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.reglastxt}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="confirmados" role="tabpanel" aria-labelledby="confirmados-tab">
+                        <table class="table table-border">
+                            <thead>
+                                <tr>
+                                    <td>Piloto</td>
+                                    <td>Nombre</td>
+                                    <td>IDSim</td>
+                                    <td>logo Coche</td>
+                                    <td>Coche</td>
+                                    <td>Categoria</td>
+                                    <td>Tipo</td>
+                                    <td>Estado</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tablaConfirmados">
+                                    <td scope="col"> <img width="60" [src]="item.imgPiloto" alt=""></td>
+                                    <td scope="col"> {{item.nombreCorto}}</td>
+                                    <td scope="col"> {{item.IDSim}}</td>
+                                    <td scope="col" style="Sistema-color: #d6d6d6;text-align: center; "> <img width="40" [src]="item.logoCoche" alt=""></td>
+                                    <td scope="col"> {{item.Coche}}</td>
+                                    <td scope="col"> {{item.Categoria}}</td>
+                                    <td scope="col"> {{item.Tipo}}</td>
+                                    <td scope="col">
+                                        <span class="text-white p-1 bg-success" *ngIf="item.Estado === 'Confirmado'">{{item.Estado}}</span>
+                                        <span class="text-white p-1 bg-danger" *ngIf="item.Estado === 'No asistirá'">{{item.Estado}}</span>
+                                        <span class="text-white p-1 bg-secondary" *ngIf="item.Estado === 'Sin Confirmar'">{{item.Estado}}</span>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="Sancionados" role="tabpanel" aria-labelledby="Sancionados-tab">
+                        <h5>Lista de sancionados en la division en curso</h5>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>Repporte N°</td>
+                                    <td>Estado</td>
+                                    <td>Nombre Corto</td>
+                                    <td> Sancion</td>
+                                    <td> Archivo </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tablaSancionados">
+                                    <td>{{item.ReporteNo}}</td>
+                                    <td>{{item.Estado}}</td>
+                                    <td>{{item.nombreCorto}}</td>
+                                    <td>{{item.Sancion}}</td>
+                                    <td>
+                                        <a [href]="item.Ver" target="_blank" class="btn btn-info">Ver</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="CalendarioTorneo" role="tabpanel" aria-labelledby="CalendarioTorneo-tab">
+                        <h5>Calendario de la Division</h5>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>Torneo</td>
+                                    <td>Division</td>
+                                    <td>Evento</td>
+                                    <td> Fecha Hora</td>
+                                    <td> Estado </td>
+                                    <td> Sistema Pts </td>
+                                    <td> Transm </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tablaCalendario">
+                                    <td>{{item.Torneo}}</td>
+                                    <td>{{item.Division}}</td>
+                                    <td>{{item.Evento}}</td>
+                                    <td>{{retornaFecha(item.Fecha_Hora) | date :'MMM d, y, h:mm a'}}</td>
+                                    <td>
+                                        <span class="bg-success p-1 text-white" *ngIf="item.Estado === 'Completada' ">{{item.Estado}}</span>
+                                        <span class="bg-danger p-1 text-white" *ngIf="item.Estado === 'Programada' ">{{item.Estado}}</span>
+                                        <span class="bg-warning p-1 text-white" *ngIf="item.Estado === 'Aplicado' ">{{item.Estado}}</span>
+                                    </td>
+                                    <td>{{item.Sistema_Pts}}</td>
+                                    <td><a [href]="item.Transm" *ngIf="item.Transm !== null" class="ntm btn-info">Ver</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="sistemaPts" role="tabpanel" aria-labelledby="sistemaPts-tab">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <td> Sistema</td>
+                                    <td>Descrip</td>
+                                    <td>Posicion</td>
+                                    <td>Puntos</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of tablaSistemaDePuntos">
+                                    <td>{{item.Sistema}}</td>
+                                    <td>{{item.Descrip}}</td>
+                                    <td>{{item.Posicion}}</td>
+                                    <td>{{item.Puntos}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="Repeticiones" role="tabpanel" aria-labelledby="Repeticiones-tab">
+                        <div class="py-3 content-cards">
+                            <div class="card" *ngFor="let item of tablaRepeticiones; let i = index">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{item.nombreCorto}} {{item.observaciones?'-':''}} {{item.observaciones}} - <a [href]="item.Rep" target="_blank" class="btn btn-info"> Ver</a> - <button class="btn btn-warning" type="button" (click)="createIframeDinaic(item.Player,i)">Visualizar</button></h5>
+
+                                    <div class="embed-responsive embed-responsive-16by9 full " id="{{i}}-Iframe"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button (click)="salir()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">salir</button>
+            </div>
+
+        </div>
+    </div>
+</div>

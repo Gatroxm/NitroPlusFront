@@ -1,0 +1,395 @@
+<div class="card">
+    <div class="content-imagenBanner">
+        <img [src]="resultado.logosimulador" alt="" class="imagensimulador">
+        <img class="card-img-top" [src]="resultado.ImgTrack" alt="Card image" />
+        <img [src]="resultado.logotorneo" alt="" class="imagentorneo">
+        <span class="posicion">{{resultado.Posicion}}
+            <span class="tstss">Posición final</span>
+        </span>
+    </div>
+    <div class="card-body p-0">
+        <h5 class="card-title-inscripciones"><img [src]="resultado.Bandera" alt=""> {{ resultado.nombreEventoCorto }}</h5>
+        <ul class="list-group m-3">
+            <li class="list-group-item d-flex justify-content-between">
+                <span> <i class="mdi mdi-calenda"></i> <strong class="capitalice">{{fechaCarrera | date: 'MMM d, y, h:mm a'}}</strong></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span> <i class="mdi mdi-routes"></i> <strong>{{resultado.nombrePista}}</strong></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <a href="{{resultado.linkOficial}}" target="_blank"><span> <i class="mdi mdi-trophy-outline"></i> <strong>{{resultado.nombreTorneo}}</strong></span></a>
+
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span> <i class="mdi mdi-account-multiple-outline"></i> <strong>{{resultado.NombreDivision}}</strong></span>
+
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span> <i class="mdi mdi-flag-checkered"></i> <strong>{{resultado.nombreEvento}}</strong></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span class="bg-danger p-1 text-white" (click)="modalInfoReglasTorneo = true"> <i class="mdi mdi-information-outline"></i> Más información
+                </span>
+                <span class="bg-danger p-1 text-white ml-3" (click)="OpenmodalFichaCarrera()"><i class="mdi mdi-account-card-details"></i> Ficha</span>
+            </li>
+        </ul>
+        <div class="row m-0 h-personalizado">
+
+            <div class="col-12 col-lg-6 mt-3" *ngIf="resultado.permiteReportes === 1 && btnReportes">
+                <button class="btn btn-sm btn-outline-secondary" type="button" (click)="modalReportes = true"><i class="mdi mdi-access-point"></i> Reportar</button>
+            </div>
+            <div class="col-lg-6 col-12 mt-3 text-rigth" *ngIf="resultado.permiteReportes === 1 && btnReportes">
+                Cierre: <span class="f-ssmall p-1 text-white "><small >{{contadorFechaFinReportes}}</small></span>
+            </div>
+            <div class="col-12 col-lg-6 mt-3" *ngIf="btnRepeticiones">
+                <button class="btn btn-sm btn-outline-secondary" type="button" (click)="modalRepeticiones = true"><i class="mdi mdi-play-circle-outline"></i> Enviar Repetición</button> <span (click)="openTableRepeticiones(resultado.idCalendario)" class="info p-1 bg-danger text-white"><i class="mdi mdi-information-outline"></i> </span>
+            </div>
+            <div class="col-lg-6 col-12 mt-3 text-rigth" *ngIf="btnRepeticiones">
+                Cierre: <span class="f-ssmall p-1 text-white "><small >{{contadorFechaFinRepeticiones}}</small></span>
+            </div>
+            <div class="col-12 col-lg-6 my-3">
+                <button class="btn btn-sm btn-danger" type="button" (click)="openModalMasInformacion()"><i class="mdi mdi-table-large"></i> Resultados</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <a [href]="resultado.urlBanner" target="_blank">
+            <img class="w-100" [src]="resultado.imgBanner" alt="">
+        </a>
+    </div>
+
+</div>
+
+<div class="modal fade show " *ngIf="modalResultadosPosicionesReportes" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tabla de resultados</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalResultadosPosicionesReportes = false">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('resultados')" class="nav-link active" id="resultados-tab" data-toggle="tab" data-target="#resultados" type="button" role="tab" aria-controls="resultados" aria-selected="true">Resultados</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('posiciones')" class="nav-link" id="posiciones-tab" data-toggle="tab" data-target="#posiciones" type="button" role="tab" aria-controls="posiciones" aria-selected="false">Tábla de posiciones</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('Reportes')" class="nav-link" id="Reportes-tab" data-toggle="tab" data-target="#Reportes" type="button" role="tab" aria-controls="Reportes" aria-selected="false">Reportes de la fecha</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tabs_pestanas tab-pane fade show active" id="resultados" role="tabpanel" aria-labelledby="resultados-tab">
+                        <p class="text-center">TT: Tiempo total en carrera /// #Vuelt: Numero de vueltas completadas /// Dif: Diferencia con el lider /// P.B. Paradas en Boxes /// M.V. Mejor vuelta en carrera /// T.Q Tiempo en Clasificacion /// P.S. Posicion de Salida /// P.G.
+                            Posiciones Ganadas /// +-Elo Elo ganado o perdido en carrera /// +-SR SR ganado o perdido en carrera /// Inid. Incidentes en carrera</p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Pos</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Piloto</th>
+                                        <th scope="col">Marca</th>
+                                        <th scope="col">TT</th>
+                                        <th scope="col"># Vuelt</th>
+                                        <th scope="col">Dif</th>
+                                        <th scope="col">P.B</th>
+                                        <th scope="col">M.V.</th>
+                                        <th scope="col">T.Q.</th>
+                                        <th scope="col">P.S.</th>
+                                        <th scope="col">P.G.</th>
+                                        <th scope="col">+-Elo</th>
+                                        <th scope="col">+-SR</th>
+                                        <th scope="col">Incid.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="noResult">
+                                        <td>No cuentas con resultados</td>
+                                    </tr>
+                                    <tr *ngFor="let resul of tblResultados">
+                                        <th scope="col">{{resul.Pos}}</th>
+                                        <th scope="col">{{resul.nombreCorto}}</th>
+                                        <th scope="col">
+                                            <div [innerHTML]="resul.Piloto"></div>
+                                        </th>
+                                        <th scope="col" style="background-color: #d6d6d6;text-align: center; ">
+                                            <div [innerHTML]="resul.Marca"></div>
+                                        </th>
+                                        <th scope="col">{{resul.Total}}</th>
+                                        <th scope="col">{{resul.numeroDeVueltas}}</th>
+                                        <th scope="col">{{resul.Gap}}</th>
+                                        <th scope="col">{{resul.msParadasBox}}</th>
+                                        <th scope="col">{{resul.MejorVuelta}}</th>
+                                        <th scope="col">{{resul.TiempoQualy}}</th>
+                                        <th scope="col">{{resul.PosSalida}}</th>
+                                        <th scope="col">{{resul.posGanadas}}</th>
+                                        <th scope="col">{{resul.variacionELO}}</th>
+                                        <th scope="col">{{resul.variacionSR}}</th>
+                                        <th scope="col">{{resul.incidentesCarrera}}</th>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="posiciones" role="tabpanel" aria-labelledby="posiciones-tab">
+                        <p class="text-center">Part: Participaciones // Vic: Victorias // Pod: Podios // DNF: No termina // DSQ: Descalificado // Poles: Poles // VR: Vueltas Rapidas // PD: Piloto del dia // PP: Puntos de sancion en tabla // Pts: Puntos antes de sanciones //
+                            Total Pts: Puntos despues de sanciones</p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Pos</th>
+                                        <th scope="col">Piloto</th>
+                                        <th scope="col">Cat</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Tipo</th>
+                                        <th scope="col">Coche</th>
+                                        <th scope="col">Marca</th>
+                                        <th scope="col">Part</th>
+                                        <th scope="col">Vic</th>
+                                        <th scope="col">Pod</th>
+                                        <th scope="col">DNF</th>
+                                        <th scope="col">DSQ</th>
+                                        <th scope="col">Poles</th>
+                                        <th scope="col">VR</th>
+                                        <th scope="col">PD</th>
+                                        <th scope="col">pp</th>
+                                        <th scope="col">Pts</th>
+                                        <th scope="col">Total Pts</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="noResult">
+                                        <td>No cuentas con resultados</td>
+                                    </tr>
+                                    <tr *ngFor="let resul of tblPosiciones">
+                                        <th scope="col">{{resul.Pos}}</th>
+                                        <th scope="col">
+                                            <div [innerHTML]="resul.Piloto"></div>
+                                        </th>
+                                        <th scope="col">{{resul.nombrecat}}</th>
+                                        <th scope="col">{{resul.nombreCorto}}</th>
+                                        <th scope="col">{{resul.nombretipo}}</th>
+                                        <th scope="col">{{resul.nombrecoche}}</th>
+                                        <th scope="col" style="background-color: #d6d6d6;text-align: center; ">
+                                            <div [innerHTML]="resul.Marca"></div>
+                                        </th>
+                                        <th scope="col">{{resul.Part}}</th>
+                                        <th scope="col">{{resul.Vic}}</th>
+                                        <th scope="col">{{resul.Pod}}</th>
+                                        <th scope="col">{{resul.DNF}}</th>
+                                        <th scope="col">{{resul.DSQ}}</th>
+                                        <th scope="col">{{resul.Poles}}</th>
+                                        <th scope="col">{{resul.VR}}</th>
+                                        <th scope="col">{{resul.PD}}</th>
+                                        <th scope="col">{{resul.sanciones}}</th>
+                                        <th scope="col">{{resul.PuntosGen}}</th>
+                                        <th scope="col">{{resul.PuntosFinales | number: '1.0-0'}}</th>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="Reportes" role="tabpanel" aria-labelledby="Reportes-tab">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td scope="col">N° Reporte</td>
+                                    <td scope="col">Estado</td>
+                                    <td scope="col">N° Vuelta</td>
+                                    <td scope="col">Roles</td>
+                                    <td scope="col">Ver</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="noResult">
+                                    <td>No cuentas con resultados</td>
+                                </tr>
+                                <tr *ngFor="let item of resultadosReportesDeLaFecha">
+                                    <td scope="col">
+                                        {{item.ReporteNo}}
+                                    </td>
+                                    <td scope="col">
+                                        {{item.Estado}}
+                                    </td>
+                                    <td scope="col">
+                                        {{item.noVuelta}}
+                                    </td>
+                                    <td scope="col">
+                                        {{item.Roles}}
+                                    </td>
+                                    <td scope="col">
+                                        <a [href]="item.Ver" class="btn btn-primary">Ver</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="modalResultadosPosicionesReportes = false">salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal show fade" *ngIf="modalRepeticiones" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enviar Repetición</h5>
+                <button type="button" class="close" (click)="modalRepeticiones = false" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="Repeticion" (ngSubmit)="ngSubmit()">
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <p>Indica la hora, minuto y segundo donde se apagan los semáforos. Para más información consulta el menú GUIAS</p>
+                        </div>
+                        <div class="col"> <label for="hora">Hora</label>
+                            <input type="number" class="form-control" formControlName="hora"></div>
+                        <div class="col"><label for="minuto">Minuto</label>
+                            <input type="number" class="form-control" formControlName="minuto"></div>
+                        <div class="col"><label for="segundo">Segundo</label>
+                            <input type="number" class="form-control" formControlName="segundo"></div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="link">Link del video</label>
+                        <input type="url" class="form-control" formControlName="link">
+                    </div>
+                    <div class="form-group">
+                        <label for="obs">Observaciones</label>
+                        <textarea name="obs" id="obs" class="form-control" cols="10" formControlName="observaciones" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Guardar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="modalRepeticiones = false">salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade show " *ngIf="modalListadoRepeticiones" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tabla de Repeticiones</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalListadoRepeticiones = false">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nombre Corto</th>
+                                <th scope="col">Es Obigatorio</th>
+                                <th scope="col">Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let resul of listadoRepeticioness">
+                                <th scope="col">{{resul.nombreCorto}}</th>
+                                <th scope="col">
+                                    <span class="text-white bg-danger" *ngIf="resul.EsObligatorio === 'No'">No</span>
+                                    <span class="text-white bg-success" *ngIf="resul.EsObligatorio === 'Si'">Si</span>
+                                </th>
+                                <th scope="col"><a class="btn btn-info" [href]="resul.link_video" *ngIf="resul.link_video != null"> Ver</a></th>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="modalListadoRepeticiones = false">salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal show fade" *ngIf="modalReportes" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Núevo reporte</h5>
+                <button type="button" class="close" (click)="modalReportes = false" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="Reportar" (ngSubmit)="ngSubmitReportar()">
+
+                    <div class="form-group">
+                        <label for="noVuelta">N° Vuelta</label>
+                        <input type="number" class="form-control" formControlName="noVuelta">
+                    </div>
+                    <div class="form-group">
+                        <label for="piloto">Piloto a denunciar</label>
+                        <select name="piloto" class="form-control" formControlName="idPilotoDenunciado">
+                            <option value="">Seleccione un piloto</option>
+                            <option *ngFor="let item of listadoPilotosParticipantes" [value]="item.id">{{item.NombreSeleccion}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="evidencia">Evidencia: Link del clip, video o imagen</label>
+                        <input type="url" class="form-control" formControlName="evidencia">
+                    </div>
+                    <div class="form-group">
+                        <label for="desc">Descripción</label>
+                        <textarea name="desc" id="desc" class="form-control" cols="10" formControlName="descripcion" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Guardar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="modalReportes = false">salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" tabindex="-1" *ngIf="modalFrichaCarrera">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title">Ficha de carrera</h5>
+            </div>
+            <div class="modal-body">
+                <article>
+                    <p class="mb-2">
+                        Apoya a Nitro!! Descarga esta imagen y publicala en tus redes sociales Si la publicas en Instagram etiqueta a @nitrosimracingclub y la compartiremos en nuestras historias Si hay un error en la imagen, reportala al administrador
+                    </p>
+                    <img [src]="imgModalCarrera" alt="" class="img-fluid">
+                </article>
+            </div>
+            <div class="modal-footer">
+                <a [href]="enlaceModalCarrera" target="_blank" class="btn btn-info">Descargar Ficha</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="modalFrichaCarrera = false">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<app-modal-torneo [id]="resultado.idCalendario" (newItemEvent)="salirmodal()" *ngIf="modalInfoReglasTorneo"></app-modal-torneo>

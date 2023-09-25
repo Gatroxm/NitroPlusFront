@@ -1,0 +1,60 @@
+<!-- Moda Calendario -->
+
+
+<div class="modal fade show" *ngIf="ModalInfoTorneo" id="ModalInfoTorneo" tabindex="-1" role="dialog" aria-labelledby="ModalInfoTorneoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalInfoTorneoLabel">Información del torneo </h5>
+                <button type="button" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('tab1Torneo')" class="nav-link active" id="tab1Torneo-tab" data-toggle="tab" data-target="#tab1Torneo" type="button" role="tab" aria-controls="tab1Torneo" aria-selected="true">Ficha del torneo</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('tab2Torneo')" class="nav-link" id="tab2Torneo-tab" data-toggle="tab" data-target="#tab2Torneo" type="button" role="tab" aria-controls="tab2Torneo" aria-selected="false">Inscritos</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div *ngIf="tab1" class="tab-pane fade show active" id="tab1Torneo-tab" role="tabpanel" aria-labelledby="tab1Torneo-tab">
+                        <h2>{{Torneo.nombre}}</h2>
+                        <div [innerHTML]="Torneo.descripcion"></div>
+                        <div [innerHTML]="Torneo.requisitosTxt"></div>
+                        <div [innerHTML]="Torneo.formatoTxt"></div>
+                    </div>
+                    <div *ngIf="tab2" class="tab-pane fade" id="tab2Torneo" role="tabpanel" aria-labelledby="tab2Torneo-tab">
+                        <table class="table table-border">
+                            <thead>
+                                <tr>
+                                    <td>#</td>
+                                    <td>Piloto</td>
+                                    <td>Nombre</td>
+                                    <td>Id Sim</td>
+                                    <td>N° Part</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of inscritos; let i = index;">
+                                    <td>{{i+1}}</td>
+                                    <td>
+                                        <img [src]="item.Piloto" width="60" alt="">
+                                    </td>
+                                    <td>{{item.Nombre}}</td>
+                                    <td>{{item.IdSim}}</td>
+                                    <td>{{item.No}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="closeModal()" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>

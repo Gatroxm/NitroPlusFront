@@ -1,0 +1,52 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Listado de torneos</h5>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-border">
+                <thead>
+                    <tr>
+                        <td><strong> Fecha N°</strong></td>
+                        <td><strong> Fecha y Hora Carrera</strong></td>
+                        <td><strong> Torneo</strong></td>
+                        <td><strong> Division</strong></td>
+                        <td><strong> Estado</strong></td>
+                        <td><strong> Acciones</strong></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of resultados">
+                        <td>{{item.fechaNo}}</td>
+                        <td>{{retornaFecha(item.fechaHoraCarrera) | date :'MMM d, y, h:mm a'}}</td>
+                        <td>{{item.Torneo}}</td>
+                        <td>{{item.Division}}</td>
+                        <td>{{item.Estado}}</td>
+                        <td><button class="btn btn-primary" (click)="openModalResultados(item)">Agregar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Moda Calendario -->
+
+
+<div class="modal fade show" *ngIf="ModalDigitadoers" id="ModalDigitadoers" tabindex="-1" role="dialog" aria-labelledby="ModalDigitadoersLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalDigitadoersLabel">Agregar</h5>
+                <button type="button" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <app-resultados-digitadores [resultados]="resultado" (closeModalResultados)="closeModal()"></app-resultados-digitadores>
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="closeModal()" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>

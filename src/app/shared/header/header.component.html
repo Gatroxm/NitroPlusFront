@@ -1,0 +1,152 @@
+<!-- ============================================================== -->
+<!-- Topbar header - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<header class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-light">
+        <!-- ============================================================== -->
+        <!-- Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-header">
+            <a class="navbar-brand" routerLink="/dashboard">
+                <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <img src="./assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                            <img src="./assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                        </b>
+                <!--End Logo icon -->
+                <!-- Logo text --><span *ngIf="logo">
+                         <!-- dark Logo text -->
+                         <img src="./assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                         <!-- Light Logo text -->    
+                         <img src="./assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Logo -->
+        <!-- ============================================================== -->
+        <div class="navbar-collapse">
+            <!-- ============================================================== -->
+            <!-- toggle and nav items -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav mr-auto">
+                <!-- This is  -->
+                <li class="nav-item"> <a id="tegleMenu" class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" (click)="clickBurgerMenu()"><i class="ti-menu"></i></a> </li>
+                <li class="nav-item"> <a id="tegleMenu" class="nav-link sidebartoggler hidden-sm-down waves-effect waves-dark" (click)="clickBurgerMenu()"><i class="ti-menu"></i></a> </li>
+                <li class="nav-item hidden-sm-down"></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link waves-effect dropdown-toggle waves-dark" routerLink="/dashboard/apoyanos/nitro" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="mdi mdi-diamond"></i>
+                        <!-- <div class="notify"> 
+                            <span class="heartbit"></span> <span class="point"></span> 
+                        </div> -->
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link waves-effect dropdown-toggle waves-dark" routerLink="/dashboard/apoyanos/tienda-oficial" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="mdi mdi-wallet-giftcard"></i>
+                        <!-- <div class="notify"> 
+                            <span class="heartbit"></span> <span class="point"></span> 
+                        </div> -->
+                    </a>
+                </li>
+            </ul>
+            <!-- ============================================================== -->
+            <!-- User profile and search -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav my-lg-0">
+                <!-- ============================================================== -->
+                <!-- Search -->
+                <!-- ============================================================== -->
+
+                <!-- ============================================================== -->
+                <!-- Comment -->
+                <!-- ============================================================== -->
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" [ngClass]="{'text-danger':noleidosColor()}" routerLink="/dashboard/communiques" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="mdi mdi-file-document"></i> ({{noleidos}})
+                        <!-- <div class="notify"> 
+                            <span class="heartbit"></span> <span class="point"></span> 
+                        </div> -->
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
+                        <!-- <div class="notify"> 
+                            <span class="heartbit"></span> <span class="point"></span> 
+                        </div> -->
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right mailbox animated fadeIn">
+                        <ul>
+                            <li>
+                                <div class="drop-title">Notifications</div>
+                            </li>
+                            <li>
+
+                                <div class="message-center">
+                                    <!-- Message -->
+                                    <a *ngFor="let notificacion of notificaciones" (click)="viewNotificacion(notificacion)">
+                                        <div class="btn btn-circle mr-3"><img [src]="notificacion.Icono" alt=""></div>
+                                        <div class="mail-contnet">
+                                            <h5>{{notificacion.nombre}}</h5> <span class="mail-desc">{{notificacion.texto}}</span> <span class="time">{{notificacion.fechaCreacion | date}}</span> </div>
+                                    </a>
+
+                                </div>
+                            </li>
+                            <!-- <li>
+                                <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                            </li> -->
+                        </ul>
+                    </div>
+                </li>
+                <!-- ============================================================== -->
+                <!-- Profile -->
+                <!-- ============================================================== -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img [src]="foto" alt="user" class="profile-pic" /></a>
+                    <div class="dropdown-menu dropdown-menu-right animated fadeIn">
+                        <ul class="dropdown-user">
+                            <li>
+                                <div class="dw-user-box">
+                                    <div class="u-img"><img [src]="foto" alt="user"></div>
+                                    <div class="u-text">
+                                        <h4>{{usuario.nombreCorto | slice: 0:20}} {{(usuario.nombreCorto.length > 20) ? '...':''}}</h4>
+                                        <p class="text-muted">
+                                            {{usuario.correoElectronico | slice: 0:20}} {{(usuario.nombreCorto.email > 20) ? '...':''}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li><a routerLink="perfil"><i class="ti-user"></i>Perfil </a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a routerLink="account-settings"><i class="ti-settings"></i> Ajustes</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a (click)="logout()" class="cursor"><i class="fa fa-power-off"></i> Salir</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<!-- ============================================================== -->
+<!-- End Topbar header -->
+<!-- ============================================================== -->
+<div class="modal fade show" tabindex="-1" *ngIf="modalNotification">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{notificacionView.nombre}}</h5>
+            </div>
+            <div class="modal-body">
+                <img [src]="notificacionView.Icono" alt="">
+                <p>{{notificacionView.texto}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="leido()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

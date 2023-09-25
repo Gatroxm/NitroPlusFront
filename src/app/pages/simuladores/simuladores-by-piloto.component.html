@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <p>A continuación encontrarás los IDs que tienes registrados en cada plataforma de juego. Por favor, verifica que los identificadores son correctos, de lo contrario, el sistema no reconocerá tus resultados al momento de ingresarlos.</p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+
+                                <th scope="col">Logo Simulador</th>
+                                <th scope="col">Simulador</th>
+                                <th scope="col">Logo Plataforma</th>
+                                <th scope="col">Plataforma</th>
+                                <th scope="col">Identificador</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let simulador of Simuladores">
+                                <td class="h-75-nitro">
+                                    <img class="h-75-nitro" [src]="simulador.logosim" alt="">
+                                </td>
+                                <td class="h-75-nitro"><span class="d-block pt-nitro">{{simulador.Simulador}}</span></td>
+                                <td class="h-75-nitro">
+                                    <img class="h-75-nitro" [src]="simulador.logoplat" alt="">
+                                </td>
+                                <td class="h-75-nitro"><span class="d-block pt-nitro">{{simulador.Plataforma}}</span></td>
+                                <td class="h-75-nitro"><span class="d-block pt-nitro">{{simulador.Identificador}}</span></td>
+                                <td class="h-75-nitro text-center" style="    background-color: silver;"><strong class="d-block pt-nitro">{{simulador.Valor}}</strong></td>
+                                <td class="h-75-nitro">
+                                    <div class="d-block pt-nitro">
+                                        <div class="switch">
+
+                                            <label><input type="checkbox" [checked]="simulador.idEstado===1?true:false" (click)="update(simulador)"><span class="lever switch-col-red"></span></label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

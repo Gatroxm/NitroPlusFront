@@ -1,0 +1,16 @@
+.modal {
+    display: block;
+    .modal-body {
+        max-height: 70vh;
+        overflow: auto;
+        background-color: #E0c8a8;
+        color: #000;
+        @media (max-width: 850px) {
+            height: 650px;
+        }
+    }
+}
+
+.Noleido {
+    background-color: rgb(0 0 0 / 20%)
+}

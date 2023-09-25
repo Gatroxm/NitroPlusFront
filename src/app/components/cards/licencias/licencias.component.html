@@ -1,0 +1,43 @@
+<div class="card">
+    <div class="content-licencias p-0 container-fluid">
+        <div class="row m-0">
+            <div class="content-imagen p-0 col-12">
+                <img [src]="licencias.linkImagen" class="w-100" alt="">
+            </div>
+
+            <div class="content-card col-12 py-3 text-center">
+                <div class="" *ngIf="licencias.LicenciaNo === null">
+                    <p>LICENCIA NO DISPONIBLE</p>
+                    <button class="btn btn-licencias " [ngClass]="{'mr-3':licencias.requiereSala == 1}" (click)="openModalLicencias()">Como Obtenerla</button>
+                    <!-- *ngIf="licencias.requiereSala == 1" -->
+                    <button class="btn btn-licencias" (click)="openCalendario()" *ngIf="licencias.requiereSala == 1">Calendario</button>
+                </div>
+                <div class="text-center my-2">
+                    <a class="btn btn-info" target="_blank" [href]="licencias.linkTiempos">Lista de tiempos</a>
+                </div>
+                <div class="" *ngIf="licencias.LicenciaNo !== null">
+                    <div class="container-fluid text-center">
+                        <div class="row">
+                            <div class="col-12">
+                                <p>LICENCIA OBTENIDA</p>
+                            </div>
+                            <div class="col">
+                                <p>{{licencias.TextoELO}}</p>
+                                <p>{{licencias.TextoParticipaciones}}</p>
+                            </div>
+                            <div class="col">
+                                <p>{{licencias.TextoSR}}</p>
+                                <p>{{licencias.TextoIndCump}}</p>
+                            </div>
+                            <div class="col-12">
+                                <a class="btn btn-licencias" target="_blank" [href]="licencias.LinkFicha">Ficha</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

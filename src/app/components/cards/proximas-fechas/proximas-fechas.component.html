@@ -1,0 +1,189 @@
+<div class="card">
+    <div class="content-imagenBanner">
+        <img [src]="carreras.logosimulador" alt="" class="imagensimulador">
+        <img class="card-img-top" [src]="carreras.ImgTrack" alt="Card image" />
+        <img [src]="carreras.logotorneo" alt="" class="imagentorneo">
+        <span class="posicion">{{fechaCarrera | date: 'MMM d, y, h:mm a'}} <small class="txtx-Ss">{{carreras.tipoPiloto}}</small></span>
+    </div>
+    <div class="card-body p-0">
+        <h5 class="card-title-inscripciones"><img [src]="carreras.Bandera" alt=""> {{ carreras.nombreEventoCorto }}</h5>
+        <ul class="list-group m-3">
+            <li class="list-group-item d-flex justify-content-between" *ngIf="link">
+                <i class="mdi mdi-calendar"></i> Host: <a class="btn btn-info" target="_blank" [href]="carreras.host"> Ir </a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between" *ngIf="!link ">
+                <span> <i class="mdi mdi-calendar"></i> Host: <strong class="capitalice">{{carreras.host}}</strong></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span> <i class="mdi mdi-routes"></i> <strong>{{carreras.nombrePista}}</strong></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <a href="{{carreras.linkOficial}}" target="_blank"><span> <i class="mdi mdi-trophy-outline"></i> <strong>{{carreras.nombreTorneo}}</strong></span></a>
+
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span> <i class="mdi mdi-account-multiple-outline"></i> <strong>{{carreras.NombreDivision}}</strong></span>
+
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span> <i class="mdi mdi-flag-checkered"></i> <strong>{{carreras.nombreEvento}}</strong></span>
+
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span class="bg-danger p-1 text-white" (click)="modalInfoReglasTorneo = true"> <i class="mdi mdi-information-outline"></i> Más información
+                </span>
+                <span *ngIf="carreras.requiereConfirmacion === 1 && !btnReportes" class="bg-danger p-1 text-white" (click)="LiveCam = true"> Live Cam</span>
+            </li>
+        </ul>
+        <div class="row m-0">
+            <div class="col-12 col-lg-6 my-3" *ngIf="carreras.requiereConfirmacion === 1 && btnReportes">
+                <button class="btn btn-sm btn-outline-secondary" type="button" (click)="modalConfirmaciones = true"><i class="mdi mdi-access-point"></i> C. Asistencia</button>
+                <i *ngIf="confirma" class="mdi icono mdi-check-circle text-success"></i>
+                <i *ngIf="noconfirma" class="mdi icono mdi-window-close text-danger"></i>
+                <i *ngIf="questoin" class="mdi icono mdi-calendar-question text-default"></i>
+            </div>
+            <div class="col-lg-6 col-12 my-3 text-rigth" *ngIf="carreras.requiereConfirmacion === 1 && btnReportes">
+                Cierre: <span class="f-ssmall p-1 text-white "><small class="">{{contadorFechaFinReportes}}</small></span>
+            </div>
+            <div class="col-12 my-3" *ngIf="carreras.requiereConfirmacion === 1 && !btnReportes">
+                <h3 class="text-center btn-sm btn-outline-secondary">La confirmación de asistencia No está disponible <br> {{mesnaje}}</h3>
+            </div>
+            <div class="col-12 my-3" *ngIf="carreras.requiereConfirmacion === 0">
+                <h3 class="text-center btn-sm btn-outline-secondary">Esta carrera no requiere <br> confirmación</h3>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <a [href]="carreras.urlBanner" target="_blank">
+            <img class="w-100" [src]="carreras.imgBanner" alt="">
+        </a>
+    </div>
+
+</div>
+<div class="modal fade show" *ngIf="modalConfirmaciones" id="modalConfirmaciones" tabindex="-1" aria-labelledby="modalConfirmacionesLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="modalConfirmacionesLabel">Confirmación</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalConfirmaciones = false">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Datos</h3>
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <td>Torneo</td>
+                                    <td>{{carreras.nombreTorneo}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Division</td>
+                                    <td>{{carreras.NombreDivision}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Evento</td>
+                                    <td>{{carreras.nombreEvento}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Categoria</td>
+                                    <td>{{carreras.catPiloto}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tipo</td>
+                                    <td>{{carreras.tipoPiloto}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Coche</td>
+                                    <td>{{carreras.nombrecoche}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Equipo</td>
+                                    <td>{{carreras.nombreEquipo}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha</td>
+                                    <td class="capitalice">{{retornaFecha(carreras.Fecha)| date :'MMM d, y, h:mm a'}}</td>
+                                </tr>
+
+                            </table>
+                        </div>
+                        <div class="col-12">
+                            <h3>Confirmar</h3>
+                        </div>
+                        <div class="col text-center">
+                            <button class="btn btn-success" (click)="confirmar(1)">Si</button>
+                        </div>
+                        <div class="col text-center">
+                            <button class="btn btn-danger" (click)="confirmar(0)">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="modalConfirmaciones = false">salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" *ngIf="modalReportes" id="modalReportes" tabindex="-1" aria-labelledby="modalReportesLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="modalReportesLabel">Tabla de Confirmados</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalReportes = false">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="modalReportes = false">salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<app-modal-torneo [id]="carreras.idCalendario" (newItemEvent)="salirmodal()" *ngIf="modalInfoReglasTorneo"></app-modal-torneo>
+
+<div class="modal fade show" *ngIf="LiveCam" id="LiveCam" tabindex="-1" aria-labelledby="LiveCamLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="LiveCamLabel">Confirmación</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="LiveCam = false">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('enviaTuCam')" class="nav-link active" id="enviaTuCam-tab" data-toggle="tab" data-target="#enviaTuCam" type="button" role="tab" aria-controls="enviaTuCam" aria-selected="true">Envia tu cam</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('Preview')" class="nav-link" id="Preview-tab" data-toggle="tab" data-target="#Preview" type="button" role="tab" aria-controls="Preview" aria-selected="false">Preview</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div *ngIf="tab1" class="tab-pane fade show active" id="enviaTuCam" role="tabpanel" aria-labelledby="enviaTuCam-tab">
+                        <p>“Activa tu cámara en <a href="https://vdo.ninja/" target="_blank" rel="noopener noreferrer">https://vdo.ninja/</a> y envía tu link aquí. Si tienes duda consulta las guias (Menu izquierdo). Nota: Antes de enviar la cam, confirma
+                            que la carrera tendrá transmisión”</p>
+                        <input type="link" class="form-control" [(ngModel)]="data.linkCamara">
+                        <button class="btn btn-primary" (click)="guardarTb_camaras_transmisiones()">Guardar</button>
+                    </div>
+                    <div *ngIf="tab2" class="tab-pane fade show active" id="Preview" role="tabpanel" aria-labelledby="Preview-tab">
+                        <div class="embed-responsive embed-responsive-16by9" id="video">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="LiveCam = false">salir</button>
+            </div>
+        </div>
+    </div>
+</div>

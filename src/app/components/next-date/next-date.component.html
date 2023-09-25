@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class=" align-self-center col-12 col-lg-4">
+                <img class="img-picture_carrera" [src]="carrera.Logo" alt="">
+            </div>
+            <div class="align-self-center col-12 col-lg-8">
+                <h3 class="m-b-0">{{ transformarFecha() }}</h3>
+                <h5 class="text-muted m-b-0">{{carrera.Torneo}}</h5>
+                <ul>
+                    <li>División: {{carrera.Division}}</li>
+                    <li>Evento: {{carrera.Evento}}</li>
+                </ul>
+            </div>
+            <div class="col-12">
+                <a href="{{carrera.linkOficial}}" target="_blank" class=" btn btn-outline-success">Ver info del torneo</a>
+            </div>
+        </div>
+    </div>
+</div>

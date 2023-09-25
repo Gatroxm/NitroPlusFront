@@ -1,0 +1,23 @@
+.modal {
+    display: block;
+    .modal-xl {
+        max-width: 1500px;
+        .modal-body {
+            overflow: auto;
+            max-height: 70vh;
+            @media (max-width: 850px) {
+                height: 500px;
+            }
+        }
+    }
+    .modal-lg {
+        .modal-body {
+            overflow: auto;
+            max-height: 70vh;
+            @media (max-width: 850px) {
+                height: 500px;
+                ;
+            }
+        }
+    }
+}

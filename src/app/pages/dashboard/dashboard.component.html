@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-12" *ngIf="ListadoTorneos">
+
+        <h2 class="text-white txt-bold">Otros Torneos -> (Desliza)</h2>
+        <div #sliderContainer7 class="slider">
+            <div class="slide" *ngFor="let card of Torneos">
+                <app-torneos [Torneo]="card" [Piloto]="usuario" (openModalReservaTorneoEmiter)="penModalReservaTorneo($event)" (openModalInfoTorneoEmiter)="openModalInfoTorneo($event)" (openModalInscribeteToeneoEmiter)="openModalInscribeteTorneo($event)"></app-torneos>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-12">
+        <h2>Inscripciones</h2>
+        <div #sliderContainer class="slider">
+            <div class="slide" *ngFor="let card of cards">
+                <app-inscripciones [title]="card.title" [imageUrlPlataforma]="card.imageUrlPlataforma" [imageUrlBandera]="card.imageUrlBandera" [imageUrlPatrocinio]="card.imageUrlPatrocinio" [imageUrl]="card.imageUrl"></app-inscripciones>
+            </div>
+        </div>
+    </div> -->
+    <div class="col-12">
+
+
+        <h2 class="text-white txt-bold">Prox. Fechas <span *ngIf="listadoFechas">-> (Desliza)</span></h2>
+        <!--  mas grueso -->
+        <div #sliderContainer2 class="slider" *ngIf="listadoFechas">
+            <div class="slide" *ngFor="let card of carreras">
+                <app-proximas-fechas [carreras]="card"></app-proximas-fechas>
+            </div>
+        </div>
+        <div *ngIf="!listadoFechas">
+            <img src="https://multimedia.nitrosimracing.com.co/imagenes/generales/tarjetas/sinfecha.png" alt="" class="img fluid">
+        </div>
+    </div>
+    <div class="col-12">
+
+
+        <h2 class="text-white txt-bold">Resultados <span *ngIf="listadoResulatados">-> (Desliza)</span></h2>
+        <div #sliderContainer3 class="slider" *ngIf="listadoResulatados">
+            <div class="slide" *ngFor="let resultado of resultados">
+                <app-resultados [resultado]="resultado"></app-resultados>
+            </div>
+        </div>
+        <div *ngIf="!listadoResulatados">
+            <img src="https://multimedia.nitrosimracing.com.co/imagenes/generales/tarjetas/sinresultados.png" alt="" class="img fluid">
+        </div>
+    </div>
+    <div class="col-12">
+
+        <h2 class="text-white txt-bold">Reportes en proceso <span *ngIf="listadoReportesProceso">-> (Desliza)</span></h2>
+        <div #sliderContainer4 class="slider" *ngIf="listadoReportesProceso">
+            <div class="slide" *ngFor="let card of reportesEnProceso">
+                <app-reportes-en-proceso [reporte]="card"></app-reportes-en-proceso>
+            </div>
+        </div>
+        <div *ngIf="!listadoReportesProceso">
+            <img src="https://multimedia.nitrosimracing.com.co/imagenes/generales/tarjetas/sinreportesenproceso.png" alt="" class="img fluid">
+        </div>
+    </div>
+    <div class="col-12">
+
+        <h2 class="text-white txt-bold">Reportes Cerrados <span *ngIf="ListadoReportes">-> (Desliza)</span></h2>
+        <div #sliderContainer5 class="slider" *ngIf="ListadoReportes">
+            <div class="slide" *ngFor="let card of reportes">
+                <app-reportes-cerrados [reporte]="card"></app-reportes-cerrados>
+            </div>
+        </div>
+        <div *ngIf="!ListadoReportes">
+            <img src="https://multimedia.nitrosimracing.com.co/imagenes/generales/tarjetas/sinreportescerrados.png" alt="" class="img fluid">
+        </div>
+    </div>
+
+    <div class="col-12" *ngIf="ListadoLicencias">
+        <h2 class="text-white txt-bold">Licencias -> (Desliza)</h2>
+        <div #contentlicencias class="slider">
+            <div class="slide" *ngFor="let card of licencias">
+                <app-licencias [licencias]="card" [piloto]="usuario" (openModalComoObtnerLicencias)="openmodallicencias($event)" (openModalCalendarioLicencias)="openmodallicenciasCalendario($event)"></app-licencias>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<app-modal-comoobtener-licencias [ModalComoObtenerLicencias]="modalcomoobtberlicencias" [licencias]="licenciaModalcomoObtener" (closeModalComoObtenerLicencias)="modalcomoobtberlicencias=false"></app-modal-comoobtener-licencias>
+
+<app-modal-calendario-licencias [ModalcalendarioLicencias]="ModalcalendarioLicencias" [tablaLicenciasCalendario]="tablaLicenciasCalendario" [tablaTiemposClasificacion]="tablaTiemposClasificacion" [licencias]="licenciaModalCalendarioLicencias" [piloto]="usuario"
+    (closeModalcalendarioLicencias)="ModalcalendarioLicencias=false"></app-modal-calendario-licencias>
+
+<!-- Modales Torneo -->
+<app-modal-info-torneo [ModalInfoTorneo]="ModalInfoTorneo" [Torneo]="torneo" (closeModalInfoTorneo)="ModalInfoTorneo=false"></app-modal-info-torneo>
+<app-modal-isncribete-torneo [ModalInscribeteTorneo]="ModalInscribeteTorneo" [Piloto]="usuario" [data]="dataTorneo" [Torneo]="torneo" (closeModalInscribeteTorneo)="closeModalTorneoInscripcion()"></app-modal-isncribete-torneo>
+<app-modal-reservas-torneo [ModalReservaTorneo]="ModalReservaTorneo" [dataReservas]="dataReservas" [Torneo]="torneo" (closeModalReservaTorneo)="closeModaltorneoReserva()"></app-modal-reservas-torneo>

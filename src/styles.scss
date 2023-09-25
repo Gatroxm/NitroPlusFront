@@ -1,1 +1,103 @@
 /* You can add global styles to this file, and also import other style files */
+
+#themecolors .selector,
+.cursor {
+    cursor: pointer;
+}
+
+.img-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    display: block;
+    border-radius: 100%;
+    overflow: hidden;
+    background-position: bottom center;
+    background-repeat: no-repeat;
+}
+
+.w100 {
+    width: 100px;
+}
+
+.w140 {
+    width: 140px;
+}
+
+.avatar {
+    border-radius: 100%;
+    width: 75px;
+}
+
+.h-75-nitro {
+    height: 75px;
+}
+
+.pt-nitro {
+    padding-top: 25px;
+}
+
+.hidden {
+    display: none;
+}
+
+.page-wrapper {
+    position: relative;
+    background-image: url(./assets/images/background/login-register.jpg);
+    background-color: rgba(0, 0, 0, 0.6);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    &::before {
+        background-color: rgba(0, 0, 0, 0.6);
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+}
+
+.page-titles {
+    background-color: transparent;
+}
+
+.capitalice {
+    text-transform: capitalize !important;
+}
+
+.f-ssmall {
+    background-color: #6e0606;
+    font-size: 12px;
+}
+
+.modal {
+    z-index: 99991050 !important;
+}
+
+.btn {
+    &.btn-licencias {
+        background: #01132b;
+        border: 1px solid #01132b;
+        box-shadow: 0 2px 2px 0 rgb(4 36 61 / 14%), 0 3px 1px -2px rgb(4 46 80 / 20%), 0 1px 5px 0 rgb(1 21 37 / 12%);
+        transition: 0.2s ease-in;
+        color: #fff;
+    }
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, 0.8);
+    .tab-content {
+        padding: 1rem;
+    }
+}
+
+.condenzado {
+    display: block;
+    word-wrap: break-word;
+    width: 140px;
+}

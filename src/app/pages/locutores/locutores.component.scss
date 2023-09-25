@@ -1,0 +1,46 @@
+.modal {
+    display: block;
+    .modal-xl {
+        max-width: 1500px;
+        .modal-body {
+            overflow: auto;
+            max-height: 82vh;
+            @media (max-width: 850px) {
+                height: 500px;
+            }
+        }
+    }
+    .modal-lg {
+        .modal-body {
+            overflow: auto;
+            max-height: 82vh;
+            @media (max-width: 850px) {
+                height: 500px;
+            }
+        }
+    }
+    .modal-full {
+        max-width: 100%;
+        .modal-body {
+            overflow: auto;
+            max-height: 82vh;
+            @media (max-width: 850px) {
+                height: 500px;
+            }
+            .embed-responsive {
+                width: 450px;
+                padding: 0;
+                overflow: hidden;
+                margin: 0 auto 1rem;
+                &.full {
+                    width: 100%;
+                    height: 601px;
+                }
+                @media (max-width: 850px) {
+                    width: 100%;
+                    height: auto
+                }
+            }
+        }
+    }
+}

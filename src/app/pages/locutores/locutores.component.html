@@ -1,0 +1,323 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Locutores</h5>
+                <table class="table table-border">
+                    <thead>
+                        <tr>
+                            <th>No Sala</th>
+                            <th>Carrera</th>
+                            <th>Nombre Sala</th>
+                            <th>Camaras Locutores</th>
+                            <th>Limpiar</th>
+                            <th>Abrir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of locutores">
+                            <td>{{item.id}}</td>
+                            <td>
+                                <select name="" class="form-control" id="" [value]="item.idCalendario" (change)="cambiaSelect($event.target, item)">
+                                    <option value="">Seleccione Carrera</option>
+                                    <option *ngFor="let itemSelect of selectCarreras" [selected]="(item.idCalendario === itemSelect.id)?true:false"  [value]="itemSelect.id">{{itemSelect.Evento}}</option>
+                                </select>
+                            </td>
+                            <td>{{item.nombre}}</td>
+                            <td>
+                                <button class="btn btn-primary" (click)="openModalLIveCam(item);">Agregar</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" (click)="limpiarsalatransmision(item.id);">Limpiar</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" (click)="openModalPanelTramision(item);">Abrir</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade show" *ngIf="LiveCam" id="LiveCam" tabindex="-1" aria-labelledby="LiveCamLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="LiveCamLabel">Confirmación</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="LiveCam = false">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tab('enviaTuCam')" class="nav-link active" id="enviaTuCam-tab" data-toggle="tab" data-target="#enviaTuCam" type="button" role="tab" aria-controls="enviaTuCam" aria-selected="true">Envia tu cam</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('Preview')" class="nav-link" id="Preview-tab" data-toggle="tab" data-target="#Preview" type="button" role="tab" aria-controls="Preview" aria-selected="false">Preview</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div *ngIf="tab1" class="tab-pane fade show active" id="enviaTuCam" role="tabpanel" aria-labelledby="enviaTuCam-tab">
+                        <p>“Activa tu cámara en <a href="https://vdo.ninja/" target="_blank" rel="noopener noreferrer">https://vdo.ninja/</a> y envía tu link aquí. Si tienes duda consulta las guias (Menu izquierdo). Nota: Antes de enviar la cam, confirma
+                            que la carrera tendrá transmisión”</p>
+                        <input type="link" class="form-control" [(ngModel)]="data.linkCamara">
+                        <button class="btn btn-primary mt-3" (click)="guardarTb_camaras_transmisiones()">Guardar</button>
+                    </div>
+                    <div *ngIf="tab2" class="tab-pane fade show active" id="Preview" role="tabpanel" aria-labelledby="Preview-tab">
+
+                        <div class="embed-responsive embed-responsive-16by9" id="video">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="LiveCam = false">salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" *ngIf="Paneltransmision" id="Paneltransmision" tabindex="-1" aria-labelledby="PaneltransmisionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-full">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="PaneltransmisionLabel">Panel de transmisión </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="Paneltransmision = false">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                <div id="p-modal-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-overlay')" class="nav-link active" id="p-overlay-tab" data-toggle="tab" data-target="#p-overlay" type="button" role="tab" aria-controls="p-overlay" aria-selected="true">Overlays</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-cams')" class="nav-link" id="p-cams-tab" data-toggle="tab" data-target="#p-cams" type="button" role="tab" aria-controls="p-cams" aria-selected="false">Cams</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-botonera')" class="nav-link" id="p-botonera-tab" data-toggle="tab" data-target="#p-botonera" type="button" role="tab" aria-controls="p-botonera" aria-selected="false">Botonera</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-OBS')" class="nav-link" id="p-OBS-tab" data-toggle="tab" data-target="#p-OBS" type="button" role="tab" aria-controls="p-OBS" aria-selected="false">OBS</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-liveTiming')" class="nav-link" id="p-liveTiming-tab" data-toggle="tab" data-target="#p-liveTiming" type="button" role="tab" aria-controls="p-liveTiming" aria-selected="false">LiveTiming</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-entry')" class="nav-link" id="p-entry-tab" data-toggle="tab" data-target="#p-entry" type="button" role="tab" aria-controls="p-entry" aria-selected="false">Entry</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-qualy')" class="nav-link" id="p-qualy-tab" data-toggle="tab" data-target="#p-qualy" type="button" role="tab" aria-controls="p-qualy" aria-selected="false">Qualy</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-result')" class="nav-link" id="p-result-tab" data-toggle="tab" data-target="#p-result" type="button" role="tab" aria-controls="p-result" aria-selected="false">Result</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-tp')" class="nav-link" id="p-tp-tab" data-toggle="tab" data-target="#p-tp" type="button" role="tab" aria-controls="p-tp" aria-selected="false">T.P.</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-cal')" class="nav-link" id="p-cal-tab" data-toggle="tab" data-target="#p-cal" type="button" role="tab" aria-controls="p-cal" aria-selected="false">Cal</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-votos')" class="nav-link" id="p-votos-tab" data-toggle="tab" data-target="#p-votos" type="button" role="tab" aria-controls="p-votos" aria-selected="false">Votos</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-wiki')" class="nav-link" id="p-wiki-tab" data-toggle="tab" data-target="#p-wiki" type="button" role="tab" aria-controls="p-wiki" aria-selected="false">Wiki</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-chat')" class="nav-link" id="p-chat-tab" data-toggle="tab" data-target="#p-chat" type="button" role="tab" aria-controls="p-chat" aria-selected="false">Chat</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-ajustes')" class="nav-link" id="p-ajustes-tab" data-toggle="tab" data-target="#p-ajustes" type="button" role="tab" aria-controls="p-ajustes" aria-selected="false">Ajustes</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-aux-1')" class="nav-link" id="p-aux-1-tab" data-toggle="tab" data-target="#p-aux-1" type="button" role="tab" aria-controls="p-aux-1" aria-selected="false">AUX 1</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-aux-2')" class="nav-link" id="p-aux-2-tab" data-toggle="tab" data-target="#p-aux-2" type="button" role="tab" aria-controls="p-aux-2" aria-selected="false">AUX 2</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button (click)="tabPestanas('p-aux-3')" class="nav-link" id="p-aux-3-tab" data-toggle="tab" data-target="#p-aux-3" type="button" role="tab" aria-controls="p-aux-3" aria-selected="false">Aux 3</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tabs_pestanas tab-pane fade show active" id="p-overlay" role="tabpanel" aria-labelledby="p-overlay-tab">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td>Overlay</td>
+                                    <td>Escanea</td>
+                                    <td>Piloto</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of overlay">
+                                    <td>{{item.nombreOverlay}}</td>
+                                    <td>{{item.escenaObs}}</td>
+                                    <td>
+                                        <select name="" class="form-control" id="" (change)="changePiloto($event.target, item)">
+                                            <option value="">Seleccione Un Piloto</option>
+                                            <option *ngFor="let valor of selectPilotosPUno" [value]="valor.idPiloto">{{valor.Piloto}}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <form>
+                            <div class="form-group row">
+                                <label for="staticPiloto" class="col-sm-2 col-form-label">Piloto</label>
+                                <div class="col-sm-10">
+                                    <select [(ngModel)]="formOverlay.idPiloto" name="idPiloto" class="form-control" id="selectPiloto">
+                                    <option value="">Seleccione un piloto</option>
+                                    <option *ngFor="let valor of selectPilotosPUno" [value]="valor.idPiloto">{{valor.Piloto}}</option>
+                                  </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="staticMensaje" class="col-sm-2 col-form-label">Mensaje</label>
+                                <div class="col-sm-10">
+                                    <select [(ngModel)]="formOverlay.idMensaje" name="idMensaje" class="form-control" id="selectMensaje">
+                                    <option value="">Seleccione un mensaje</option>
+                                    <option *ngFor="let valor of mensajes" [value]="valor.id">{{valor.nombre}}</option>
+                                  </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-12 text-center">
+                                    <h5>Mensaje de Radio</h5>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-6">
+                                    <input [(ngModel)]="formOverlay.personalizadoPiloto" name="txtPiloto" type="text" class="form-control" placeholder="Piloto">
+                                </div>
+                                <div class="col-6">
+                                    <input [(ngModel)]="formOverlay.personalizadoEquipo" name="txtEquipo" class="form-control" placeholder="Equipo">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <button class="btn btn-primary" (click)="GuardarOverlayFrom()">Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-cams" role="tabpanel" aria-labelledby="p-cams-tab">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td>Overlay</td>
+                                    <td>Escanea</td>
+                                    <td>Piloto</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of cams">
+                                    <td>{{item.nombreOverlay}}</td>
+                                    <td>{{item.escenaObs}}</td>
+                                    <td>
+                                        <select name="" class="form-control" id="" (change)="changePiloto($event.target, item)">
+                                            <option value="">Seleccione Un Piloto</option>
+                                            <option *ngFor="let valor of selectPilotosPDos" [value]="valor.id">{{valor.Piloto}}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="p-cams-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-botonera" role="tabpanel" aria-labelledby="p-botonera-tab">
+                        <div id="p-botonera-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-OBS" role="tabpanel" aria-labelledby="p-OBS-tab">
+                        <div id="p-OBS-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-liveTiming" role="tabpanel" aria-labelledby="p-liveTiming-tab">
+                        <div id="p-liveTiming-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-entry" role="tabpanel" aria-labelledby="p-entry-tab">
+                        <div id="p-entry-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-qualy" role="tabpanel" aria-labelledby="p-qualy-tab">
+                        <div id="p-qualy-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-result" role="tabpanel" aria-labelledby="p-result-tab">
+                        <div id="p-result-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-tp" role="tabpanel" aria-labelledby="p-tp-tab">
+                        <div id="p-tp-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-cal" role="tabpanel" aria-labelledby="p-cal-tab">
+                        <div id="p-cal-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-votos" role="tabpanel" aria-labelledby="p-votos-tab">
+                        <div id="p-votos-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-wiki" role="tabpanel" aria-labelledby="p-wiki-tab">
+                        <div id="p-wiki-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-chat" role="tabpanel" aria-labelledby="p-chat-tab">
+                        <div id="p-chat-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-ajustes" role="tabpanel" aria-labelledby="p-ajustes-tab">
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <td>Link Chat</td>
+                                <td><input type="text" class="form-control" name="" id="" #linkChat [value]="itemSelectedSala.linkChat"></td>
+                                <td> <button class="btn btn-primary" (click)="guardaRegistro(linkChat.value, 'linkChat')"><i class="mdi mdi-bookmark-check"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>Link Tranmisión</td>
+                                <td><input type="text" class="form-control" name="" id="" #linkTransmision [value]="itemSelectedSala.linkTransmision"></td>
+                                <td> <button class="btn btn-primary" (click)="guardaRegistro(linkTransmision.value, 'linkTransmision')"><i class="mdi mdi-bookmark-check"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>Link live Timing1</td>
+                                <td><input type="text" class="form-control" name="" id="" #linkLiveTiming1 [value]="itemSelectedSala.linkLiveTiming1"></td>
+                                <td> <button class="btn btn-primary" (click)="guardaRegistro(linkLiveTiming1.value, 'linkLiveTiming1')"><i class="mdi mdi-bookmark-check"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>Link live Timing2</td>
+                                <td><input type="text" class="form-control" name="" id="" #linkLiveTiming2 [value]="itemSelectedSala.linkLiveTiming2"></td>
+                                <td> <button class="btn btn-primary" (click)="guardaRegistro(linkLiveTiming2.value, 'linkLiveTiming2')"><i class="mdi mdi-bookmark-check"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>Link Botonera</td>
+                                <td><input type="text" class="form-control" name="" id="" #linkBotonera [value]="itemSelectedSala.linkBotonera"></td>
+                                <td> <button class="btn btn-primary" (click)="guardaRegistro(linkBotonera.value, 'linkBotonera')"><i class="mdi mdi-bookmark-check"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>Link Obs</td>
+                                <td><input type="text" class="form-control" name="" id="" #linkObsControl [value]="itemSelectedSala.linkObsControl"></td>
+                                <td> <button class="btn btn-primary" (click)="guardaRegistro(linkObsControl.value, 'linkObsControl')"><i class="mdi mdi-bookmark-check"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>Link Cámara Compartida</td>
+                                <td><input type="text" class="form-control" name="" id="" #linkCamaraCompartida [value]="itemSelectedSala.linkCamaraCompartida"></td>
+                                <td> <button class="btn btn-primary" (click)="guardaRegistro(linkCamaraCompartida.value, 'linkCamaraCompartida')"><i class="mdi mdi-bookmark-check"></i></button></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-aux-1" role="tabpanel" aria-labelledby="p-aux-1-tab">
+                        <div id="p-aux-1-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-aux-2" role="tabpanel" aria-labelledby="p-aux-2-tab">
+                        <div id="p-aux-2-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                    <div class="tabs_pestanas tab-pane fade show" id="p-aux-3" role="tabpanel" aria-labelledby="p-aux-3-tab">
+                        <div id="p-aux-3-Iframe" class="embed-responsive embed-responsive-16by9 full"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="Paneltransmision = false">salir</button>
+            </div>
+        </div>
+    </div>
+</div>

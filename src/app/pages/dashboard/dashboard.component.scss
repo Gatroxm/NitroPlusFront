@@ -1,0 +1,30 @@
+.modal {
+    background-color: rgba(0, 0, 0, 0.9);
+    &.show {
+        display: block !important;
+        padding-right: 17px;
+    }
+}
+
+.slider {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    cursor: grab;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+     ::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.slide {
+    scroll-snap-align: start;
+}
+
+.txt-bold {
+    font-weight: bold;
+}

@@ -1,0 +1,21 @@
+.form-control {
+    border-color: #ccc;
+}
+
+.disable-form-input {
+    background-color: #eceaea;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+ul li.redes {
+    list-style: none;
+}
+
+ul li.redes a {
+    color: #99abb4;
+    font-weight: bold;
+}

@@ -1,0 +1,220 @@
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Mi perfil de usuario</h4>
+                <h6 class="card-subtitle">Ajustes</h6>
+                <form (ngSubmit)="actualizarPerfil()" class="form p-t-20" [formGroup]="profileFrom">
+                    <div class="form-group m-t-20 row ">
+                        <div class="col-12 col-lg-6">
+                            <label for="exampleInputuname">Nombre</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input type="text" formControlName="nombre" class="form-control" id="exampleInputuname">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="exampleInputuname">Apellido</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input type="text" formControlName="apellido" class="form-control" id="exampleInputuname">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-t-20 row">
+                        <div class="col-12 col-lg-6">
+                            <label for="exampleInputEmail1">Correo</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-email"></i></div>
+                                <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="exampleInputfechaN">Fecha nacimiento</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class=" ti-calendar"></i></div>
+                                <input type="date" formControlName="fechaN" class="form-control" id="exampleInputfechaN">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-t-20 row">
+                        <div class="col-12 col-lg-6">
+                            <label for="exampleInputpais">Nacionalidad</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-flag-alt"></i></div>
+                                <select name="pais" class="form-control disable-form-input" id="pais" formControlName="pais">
+                                <option disabled *ngFor="let pais of paices" [value]="pais.id">{{pais.nombre}}</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+
+                            <label for="exampleInputwhatsapp">Whatsapp</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-headphone-alt"></i></div>
+                                <input type="text" formControlName="whatsapp" class="form-control" id="exampleInputwhatsapp" placeholder="Ejemplo: +57 325 625 6599">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-t-20 row">
+                        <div class="col-12 col-lg-6">
+                            <label for="exampleInputpais">País Residencia </label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-flag-alt"></i></div>
+                                <select name="pais" class="form-control" id="pais" formControlName="idPaisResidencia" #pais>
+                                <option *ngFor="let pais of paices" [value]="pais.id">{{pais.nombre}}</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="exampleInputdepartamento">Departamento</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-flag"></i></div>
+                                <input type="text" formControlName="departamento" class="form-control" id="exampleInputdepartamento">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-t-20 row">
+                        <div class="col-12 col-lg-6">
+                            <label for="exampleInputciudad">Ciudad</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-flag-alt-2"></i></div>
+                                <input type="text" formControlName="ciudad" class="form-control" id="exampleInputciudad">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="exampleInputTIPO_MANDO">Tipo Mando</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-game"></i></div>
+                                <select class="form-control" name="TIPO_MANDO" formControlName="TIPO_MANDO" id="TIPO_MANDO">
+                                <option *ngFor="let mando of mandos" [value]="mando.id">{{mando.nombre}}</option>
+                            </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group m-t-20 row">
+                        <div class="col-12">
+                            <label for="exampleInputresena">Resena</label>
+                            <textarea formControlName="resena" class="form-control" name="" id="" cols="10" rows="5"></textarea>
+                        </div>
+                        <!-- <div class="col-12 col-lg-6">
+                            <label for="exampleInputDISCORD_ID">Discord Id</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-shortcode"></i></div>
+                                <input [readOnly]="true" type="text" formControlName="DISCORD_ID" class="form-control" id="exampleInputDISCORD_ID">
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="form-group m-t-20 row">
+                        <div class="col-12">
+                            <h3>Redes Sociales</h3>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <label for="exampleInputcanal_twitch">Twitch</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-shortcode"></i></div>
+                                <input type="text" formControlName="canal_twitch" class="form-control" id="exampleInputcanal_twitch">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <label for="exampleInputcanal_youtube">Youtube</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-shortcode"></i></div>
+                                <input type="text" formControlName="canal_youtube" class="form-control" id="exampleInputcanal_youtube">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <label for="exampleInputcanal_facebook">Facebook</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-shortcode"></i></div>
+                                <input type="text" formControlName="canal_facebook" class="form-control" id="exampleInputcanal_facebook">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3">
+                            <label for="exampleInputcanal_instagram">Instagram</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-shortcode"></i></div>
+                                <input type="text" formControlName="instagram" class="form-control" id="exampleInputcanal_instagram">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button [disabled]="profileFrom.invalid" type="submit" class="btn btn-success btn-block waves-effect waves-light m-r-10">
+                        <i class="fa fa-save"></i>
+                        Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">ID Piloto N° {{user.id}}</h4>
+                <div *ngIf="btnEnviaFoto">
+
+                    <hr>
+                    <a target="_blank" href="https://nitrosimracing.com.co/envio-de-fotografia-para-perfiles/" class="btn btn-warning"> Envia tu foto aquí</a>
+                </div>
+                <hr>
+                <div class="mb-3">
+                    <h4>Siguenos en </h4>
+                    <ul>
+                        <li class="redes"><label for=""><a href="https://www.instagram.com/nitrosimracingcolombia/" target="_blank">Instagram <i class="mdi mdi-instagram"></i></a> </label></li>
+                        <li class="redes"><label for=""><a href="https://www.youtube.com/c/nitrosimracingtv" target="_blank">Youtube <i class="mdi mdi-youtube-play"></i></a> </label></li>
+                        <li class="redes"><label for=""><a href="https://www.twitch.tv/nitrosimracingtv" target="_blank">Twitch <i class="mdi mdi-twitch"></i></a> </label></li>
+                        <li class="redes"><label for=""><a href="https://www.facebook.com/nitrosimracingclub" target="_blank">Facebook <i class="mdi mdi-facebook-box"></i></a> </label></li>
+                        <li class="redes"><label for=""><a href="https://www.nitrocolombia.com" target="_blank">Pagina Web <i class="mdi mdi-web"></i></a> </label></li>
+                    </ul>
+                </div>
+                <div class="form-group m-t-20 row">
+                    <div class="col-sm-6">
+                        <div class="demo-switch-title">¿Acepta emails de NSC?</div>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox" [checked]="this.user.aceptaCorreos" (change)="aceptaCorreos($event)"><span class="lever switch-col-red"></span></label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="demo-switch-title">¿Acepta Whatsapp de NSC?</div>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox" [checked]="this.user.aceptaWhatsapp" (change)="aceptaWhatsapp($event)"><span class="lever switch-col-red"></span></label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <h3>Editar Contraseña </h3>
+                <form (ngSubmit)="actualizarPassword()" class="form p-t-20" [formGroup]="changePassword">
+                    <div class="form-group row m-t-20">
+                        <div class="col-12 col-lg-6">
+                            <label for="pass1">Contraseña</label>
+                            <input type="password" class="form-control" formControlName="password" placeholder="Contraseña">
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label for="pass1">Repetir contraseña</label>
+                            <input type="password" class="form-control" formControlName="password2" placeholder="Repetir Contraseña">
+                        </div>
+                        <div class="col-12">
+                            <div class="text-danger">
+                                <p *ngIf="contrasenasNoValidas()">Las contraseñas son distintas, verifique.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block waves-effect waves-light m-r-10">
+                        <i class="fa fa-save"></i>
+                        Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

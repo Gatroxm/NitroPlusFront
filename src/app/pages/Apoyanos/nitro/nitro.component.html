@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-12 col-lg-3 col-md-2" *ngFor="let card of CardsApoyanos">
+        <div class="card cursor" (click)="openModalApoyanos(card)">
+            <p class="text-center my-1">{{card.nombre}}</p>
+            <img [src]="card.linkImg" alt="" class="w-100">
+        </div>
+    </div>
+</div>
+
+<!-- Moda Calendario -->
+
+
+<div class="modal fade show" *ngIf="modalApoyanos" id="ModalInfoTorneo" tabindex="-1" role="dialog" aria-labelledby="ModalInfoTorneoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalInfoTorneoLabel">{{infoModal.nombre}}</h5>
+                <button type="button" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div [innerHTML]="infoModal.infoHTML"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="closeModal()" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
